@@ -1,0 +1,42 @@
+# OpenAI-specific configuration for Sophos RAG
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/sophos_rag.log"
+
+# Embeddings configuration
+embeddings:
+  encoder_type: "openai"
+  model_name: "text-embedding-ada-002"
+  batch_size: 16
+  normalize: true
+
+# Vector store configuration
+vector_store:
+  type: "faiss"
+  persist_directory: "data/embeddings_openai"
+  index_type: "Cosine"
+  metric_type: "Cosine"
+
+# Retriever configuration
+retriever:
+  top_k: 5
+  use_mmr: true
+  mmr_lambda: 0.5
+
+# Generator configuration
+generator:
+  type: "openai"
+  model_name: "gpt-4"
+  temperature: 0.3
+  max_tokens: 800
+  prompt_template: "rag_with_sources"
+
+# API configuration
+api:
+  host: "0.0.0.0"
+  port: 8000
+  debug: false
+  cors_origins: ["*"] 

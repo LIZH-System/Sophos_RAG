@@ -1,0 +1,29 @@
+include LICENSE
+include NOTICE
+include README.md
+include requirements.txt
+include pyproject.toml
+include setup.cfg
+include setup.py
+include .env.example
+
+recursive-include config *.yaml
+recursive-include docs *.md
+recursive-include examples *.py
+recursive-include notebooks *.ipynb
+recursive-include tests *.py
+
+recursive-exclude data *
+recursive-exclude logs *
+recursive-exclude __pycache__ *
+recursive-exclude *.pyc
+recursive-exclude *.pyo
+recursive-exclude *.pyd
+recursive-exclude .* *
+
+prune data
+prune logs
+prune .git
+prune .github
+prune .vscode
+prune .idea 

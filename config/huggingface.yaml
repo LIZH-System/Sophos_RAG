@@ -1,0 +1,43 @@
+# Hugging Face-specific configuration for Sophos RAG
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/sophos_rag.log"
+
+# Embeddings configuration
+embeddings:
+  encoder_type: "sentence_transformer"
+  model_name: "sentence-transformers/all-mpnet-base-v2"
+  device: "cuda"  # Use GPU for better performance
+  batch_size: 16
+  normalize: true
+
+# Vector store configuration
+vector_store:
+  type: "chroma"
+  persist_directory: "data/embeddings_hf"
+  collection_name: "sophos_rag"
+
+# Retriever configuration
+retriever:
+  top_k: 8
+  use_mmr: true
+  mmr_lambda: 0.7
+
+# Generator configuration
+generator:
+  type: "huggingface"
+  model_name: "mistralai/Mistral-7B-Instruct-v0.2"
+  device: "cuda"
+  temperature: 0.5
+  max_tokens: 1024
+  prompt_template: "rag"
+
+# API configuration
+api:
+  host: "0.0.0.0"
+  port: 8000
+  debug: false
+  cors_origins: ["*"] 

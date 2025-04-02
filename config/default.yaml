@@ -1,0 +1,50 @@
+# Default configuration for Sophos RAG
+
+# Data processing settings
+data:
+  chunk_size: 512
+  chunk_overlap: 50
+  text_splitter: "recursive"  # Options: recursive, sentence, token
+  encoding: "utf-8"
+
+# Embedding settings
+embeddings:
+  encoder_type: "sentence_transformer"
+  model_name: "sentence-transformers/all-MiniLM-L6-v2"
+  device: "cpu"  # Use "cuda" for GPU support
+  batch_size: 32
+  normalize: true
+
+# Vector store settings
+vector_store:
+  type: "faiss"
+  persist_directory: "data/embeddings"
+  index_type: "L2"  # Options: L2, IP, Cosine
+  metric_type: "L2"  # Options: L2, IP, Cosine
+
+# Retriever settings
+retriever:
+  top_k: 5
+  use_mmr: true  # Use Maximum Marginal Relevance for diversity
+  mmr_lambda: 0.5  # Balance between relevance and diversity (0-1)
+
+# Generator settings
+generator:
+  type: "openai"
+  model_name: "gpt-3.5-turbo"
+  temperature: 0.7
+  max_tokens: 500
+  prompt_template: "rag"  # Options: rag, rag_with_sources, qa, summarization
+
+# Logging settings
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/sophos_rag.log"
+
+# API settings
+api:
+  host: "0.0.0.0"
+  port: 8000
+  debug: false
+  cors_origins: ["*"] 

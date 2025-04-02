@@ -1,0 +1,24 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Python files
+*.py text diff=python
+
+# Jupyter notebooks
+*.ipynb text
+
+# Documentation
+*.md text
+*.txt text
+*.rst text
+
+# YAML files
+*.yaml text
+*.yml text
+
+# JSON files
+*.json text
+
+# Exclude from language statistics
+notebooks/* linguist-documentation
+docs/* linguist-documentation 
