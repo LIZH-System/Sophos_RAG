@@ -12,9 +12,9 @@ import logging
 from typing import List, Dict, Any
 from pathlib import Path
 
-from src.pipeline.rag import RAGPipelineFactory
-from src.utils.metrics import evaluate_rag
-from src.utils.logging import setup_logging
+from sophos_rag.pipeline.rag import RAGPipelineFactory
+from sophos_rag.utils.metrics import evaluate_rag
+from sophos_rag.utils.logging import setup_logging
 
 # Set up argument parser
 parser = argparse.ArgumentParser(description="Evaluate the RAG pipeline")

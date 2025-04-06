@@ -1,3 +1,12 @@
+# Environment variables
+.env
+.env.*
+
+# API keys and secrets
+*_key
+*_secret
+*_token
+
 # Python
 __pycache__/
 *.py[cod]
@@ -22,14 +31,27 @@ var/
 
 # Virtual Environment
 venv/
-ENV/
 env/
+ENV/
 
 # IDE
 .idea/
 .vscode/
 *.swp
 *.swo
+
+# Configuration files
+.env
+config/config.yaml
+!config/config_template.yaml
+
+# Logs
+*.log
+logs/
+
+# Local development
+.DS_Store
+Thumbs.db
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -42,10 +64,6 @@ data/embeddings/*
 !data/processed/.gitkeep
 !data/embeddings/.gitkeep
 
-# Logs
-logs/
-*.log
-
 # Model files
 *.bin
 *.pt
@@ -53,10 +71,6 @@ logs/
 *.h5
 *.onnx
 *.model
-
-# Environment variables
-.env
-.env.local
 
 # OS specific
 .DS_Store

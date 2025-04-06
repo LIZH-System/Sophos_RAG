@@ -1,0 +1,22 @@
+# DeepSeek API Configuration
+deepseek:
+  api_key: sk-3134d1b264ac40e6b13718e565c38fbb
+  model_name: deepseek-chat
+  temperature: 0.7
+  max_tokens: 1024
+  top_p: 0.95
+  base_url: https://api.deepseek.com/v1
+  verify_ssl: false
+  max_retries: 3
+  timeout: 30
+
+# Proxy Configuration (optional)
+proxy:
+  enabled: false
+  http: ${HTTP_PROXY}  # Will be replaced by environment variable
+  https: ${HTTPS_PROXY}  # Will be replaced by environment variable
+
+# Logging Configuration
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s" 

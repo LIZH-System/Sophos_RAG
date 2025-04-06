@@ -16,9 +16,9 @@ recursive-include tests *.py
 recursive-exclude data *
 recursive-exclude logs *
 recursive-exclude __pycache__ *
-recursive-exclude *.pyc
-recursive-exclude *.pyo
-recursive-exclude *.pyd
+recursive-exclude . *.pyc
+recursive-exclude . *.pyo
+recursive-exclude . *.pyd
 recursive-exclude .* *
 
 prune data
