@@ -13,7 +13,6 @@ chromadb>=0.4.0
 
 # LLM integration
 openai>=1.0.0
-langchain>=0.0.200
 
 # Text processing
 nltk>=3.6.0

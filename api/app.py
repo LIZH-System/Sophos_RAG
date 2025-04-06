@@ -12,8 +12,8 @@ from fastapi import FastAPI, HTTPException, Depends, Body, Query, File, UploadFi
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from src.pipeline.rag import RAGPipeline, RAGPipelineFactory
-from src.utils.logging import setup_logging
+from sophos_rag.pipeline.rag import RAGPipeline, RAGPipelineFactory
+from sophos_rag.utils.logging import setup_logging
 
 # Set up logging
 logger = logging.getLogger(__name__)

@@ -9,7 +9,7 @@ from typing import List, Dict, Any, Optional
 from fastapi import APIRouter, HTTPException, Depends, Body, Query, File, UploadFile
 from pydantic import BaseModel, Field
 
-from src.pipeline.rag import RAGPipeline
+from sophos_rag.pipeline.rag import RAGPipeline
 
 # Set up logging
 logger = logging.getLogger(__name__)

@@ -17,7 +17,7 @@ services:
       - CONFIG_PATH=config/default.yaml
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test: ["CMD", "conda", "run", "-n", "sophos_rag", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
       timeout: 10s
       retries: 3

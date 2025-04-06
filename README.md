@@ -31,6 +31,23 @@ Sophos RAG aims to push the boundaries of traditional RAG systems by:
 
 ## Installation
 
+### Using Conda (Recommended)
+
+```bash
+# Clone the repository
+git clone https://github.com/LIZH-System/Sophos_RAG.git
+cd Sophos_RAG
+
+# Create and activate conda environment
+conda env create -f environment.yml
+conda activate sophos_rag
+
+# Install the package in development mode
+pip install -e .
+```
+
+### Using Pip
+
 ```bash
 # Clone the repository
 git clone https://github.com/LIZH-System/Sophos_RAG.git
@@ -44,10 +61,24 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -e .
 ```
 
+### GPU Support
+
+For GPU acceleration, install the CUDA-enabled version of PyTorch and FAISS:
+
+```bash
+# With conda
+conda install -c pytorch pytorch cudatoolkit
+conda install -c conda-forge faiss-gpu
+
+# Or with pip
+pip install torch --extra-index-url https://download.pytorch.org/whl/cu117
+pip install faiss-gpu
+```
+
 ## Quick Start
 
 ```python
-from src.pipeline.rag import RAGPipelineFactory
+from sophos_rag.pipeline.rag import RAGPipelineFactory
 
 # Create a RAG pipeline
 pipeline = RAGPipelineFactory.create_default_pipeline()
@@ -68,7 +99,7 @@ print(result["response"])
 
 ```
 sophos_rag/
-├── src/                      # Source code
+├── sophos_rag/                      # Source code
 │   ├── data/                 # Data loading and processing
 │   ├── embeddings/           # Text embedding models
 │   ├── knowledge_graph/      # Knowledge graph integration
@@ -131,6 +162,37 @@ This project builds upon recent advances in:
 - Neuro-symbolic AI
 - Large Language Model Reasoning
 
+## Environment Variables
+
+This project uses environment variables for sensitive information like API keys. To set up:
+
+1. Copy the template file:
+```bash
+cp .env.template .env
+```
+
+2. Edit the `.env` file and add your API keys:
+```bash
+# OpenAI API
+OPENAI_API_KEY=your_openai_api_key_here
+
+# DeepSeek API
+DEEPSEEK_API_KEY=your_deepseek_api_key_here
+
+# Hugging Face
+HUGGINGFACE_TOKEN=your_huggingface_token_here
+```
+
+3. The `.env` file is ignored by git, so your API keys will not be committed.
+
+4. For CI/CD environments, set these variables in your CI/CD platform's environment settings.
+
+## Security Notes
+
+- Never commit your `.env` file or any file containing API keys
+- Use different API keys for development and production
+- Rotate your API keys regularly
+- Use the minimum required permissions for your API keys
 
 ## License
 

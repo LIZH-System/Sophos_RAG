@@ -28,19 +28,19 @@ jobs:
     
     - name: Lint with flake8
       run: |
-        flake8 src tests
+        flake8 sophos_rag tests
     
     - name: Check formatting with black
       run: |
-        black --check src tests
+        black --check sophos_rag tests
     
     - name: Check imports with isort
       run: |
-        isort --check-only --profile black src tests
+        isort --check-only --profile black sophos_rag tests
     
     - name: Test with pytest
       run: |
-        pytest --cov=src --cov-report=xml
+        pytest --cov=sophos_rag --cov-report=xml
     
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
