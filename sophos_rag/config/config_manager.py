@@ -2,6 +2,7 @@ import os
 import yaml
 from typing import Dict, Any, Optional
 from pathlib import Path
+from dotenv import load_dotenv
 
 class ConfigManager:
     """Manages configuration settings with secure handling of sensitive data."""
@@ -13,6 +14,9 @@ class ConfigManager:
         Args:
             config_path: Path to the configuration file. If None, uses default path.
         """
+        # Load environment variables from .env file
+        load_dotenv()
+        
         self.config_path = config_path or os.path.join(
             os.path.dirname(os.path.dirname(__file__)),
             "config",
@@ -28,83 +32,106 @@ class ConfigManager:
         with open(self.config_path, 'r') as f:
             config = yaml.safe_load(f)
         
-        # Replace environment variables
-        config = self._replace_env_vars(config)
         return config
     
-    def _replace_env_vars(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Replace ${VAR} placeholders with environment variables."""
-        if isinstance(config, dict):
-            for key, value in config.items():
-                if isinstance(value, str) and value.startswith('${') and value.endswith('}'):
-                    env_var = value[2:-1]
-                    env_value = os.getenv(env_var)
-                    print(f"Debug: Checking environment variable {env_var}")
-                    print(f"Debug: Current value: {value}")
-                    print(f"Debug: Environment value: {env_value}")
-                    if env_value is None:
-                        print(f"Warning: Environment variable {env_var} is not set")
-                    else:
-                        print(f"Using environment variable {env_var}")
-                        config[key] = env_value
-                elif isinstance(value, dict):
-                    config[key] = self._replace_env_vars(value)
-        return config
-    
-    def get_deepseek_config(self) -> Dict[str, Any]:
-        """Get DeepSeek API configuration."""
-        print("Debug: Getting DeepSeek configuration")
-        config = self.config.get('deepseek', {})
-        print(f"Debug: DeepSeek config: {config}")
+    def get_generator_config(self) -> Dict[str, Any]:
+        """
+        Get generator configuration based on the selected type.
         
-        # Check if API key is set
-        if not config.get('api_key'):
-            print("Debug: API key is not set in config")
-            raise ValueError("DeepSeek API key is not set. Please set the DEEPSEEK_API_KEY environment variable.")
+        Returns:
+            Dict containing generator configuration
+        """
+        generator_type = self.config.get('generator', {}).get('type', 'deepseek')
+        config = self.config.get('generator', {}).copy()
         
-        # Handle proxy settings
-        proxy_config = self.config.get('proxy', {})
-        if proxy_config.get('enabled', False):
-            config['proxies'] = {
-                'http': proxy_config.get('http'),
-                'https': proxy_config.get('https')
-            }
-        else:
-            config['proxies'] = None
+        # Add API key from environment variable
+        if generator_type == 'deepseek':
+            api_key = os.getenv('DEEPSEEK_API_KEY')
+            if not api_key:
+                raise ValueError("DEEPSEEK_API_KEY environment variable is not set")
+            config['api_key'] = api_key
+        elif generator_type == 'openai':
+            api_key = os.getenv('OPENAI_API_KEY')
+            if not api_key:
+                raise ValueError("OPENAI_API_KEY environment variable is not set")
+            config['api_key'] = api_key
         
-        print(f"Debug: Final DeepSeek config: {config}")
         return config
     
     def get_logging_config(self) -> Dict[str, Any]:
         """Get logging configuration."""
         return self.config.get('logging', {})
     
+    def get_data_config(self) -> Dict[str, Any]:
+        """Get data processing configuration."""
+        return self.config.get('data', {})
+    
+    def get_embeddings_config(self) -> Dict[str, Any]:
+        """Get embeddings configuration."""
+        return self.config.get('embeddings', {})
+    
+    def get_vector_store_config(self) -> Dict[str, Any]:
+        """Get vector store configuration."""
+        return self.config.get('vector_store', {})
+    
+    def get_retriever_config(self) -> Dict[str, Any]:
+        """Get retriever configuration."""
+        return self.config.get('retriever', {})
+    
+    def get_api_config(self) -> Dict[str, Any]:
+        """Get API configuration."""
+        return self.config.get('api', {})
+    
     @staticmethod
     def create_config_template(template_path: str) -> None:
         """Create a configuration template file."""
         template = {
-            'deepseek': {
-                'api_key': '${DEEPSEEK_API_KEY}',
+            'data': {
+                'chunk_size': 512,
+                'chunk_overlap': 50,
+                'text_splitter': 'recursive',
+                'encoding': 'utf-8'
+            },
+            'embeddings': {
+                'encoder_type': 'tfidf',
+                'max_features': 1000,
+                'ngram_range': [1, 2]
+            },
+            'vector_store': {
+                'type': 'faiss',
+                'dimension': 1000,
+                'index_type': 'Flat',
+                'distance_metric': 'cosine',
+                'nprobe': 10
+            },
+            'retriever': {
+                'type': 'similarity',
+                'top_k': 3,
+                'score_threshold': 0.1
+            },
+            'generator': {
+                'type': 'deepseek',
                 'model_name': 'deepseek-chat',
                 'temperature': 0.7,
                 'max_tokens': 1024,
                 'top_p': 0.95,
-                'base_url': 'https://api.deepseek.com/v1',
+                'base_url': 'https://api.deepseek.com',
                 'verify_ssl': False,
                 'max_retries': 3,
                 'timeout': 30
             },
-            'proxy': {
-                'enabled': False,
-                'http': '${HTTP_PROXY}',
-                'https': '${HTTPS_PROXY}'
-            },
             'logging': {
                 'level': 'INFO',
-                'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+                'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                'file': 'logs/sophos_rag.log'
+            },
+            'api': {
+                'host': '0.0.0.0',
+                'port': 8000,
+                'debug': False,
+                'cors_origins': ['*']
             }
         }
         
-        os.makedirs(os.path.dirname(template_path), exist_ok=True)
         with open(template_path, 'w') as f:
             yaml.dump(template, f, default_flow_style=False) 

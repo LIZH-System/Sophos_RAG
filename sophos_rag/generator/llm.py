@@ -356,7 +356,11 @@ class DeepSeekLLM(LLM):
         self.session = requests.Session()
         self.session.headers.update({
             "Authorization": f"Bearer {self.api_key}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "User-Agent": "PostmanRuntime/7.43.3",
+            "Accept": "*/*",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive"
         })
         
     def _make_request(self, data: Dict[str, Any], retry_count: int = 0) -> Dict[str, Any]:

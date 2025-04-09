@@ -11,7 +11,7 @@ from typing import Dict, Any
 import logging
 import pytest
 import time
-import pdb  # 添加 pdb 导入
+
 
 from sophos_rag.generator.llm import DeepSeekLLM
 from sophos_rag.utils.env import load_env_file, get_env_var
@@ -26,6 +26,7 @@ class TestDeepSeekAPI(unittest.TestCase):
         """Set up test environment."""
         # Load environment variables
         load_env_file()
+        breakpoint()  # 添加断点
         
         # Get API key
         cls.api_key = get_env_var("DEEPSEEK_API_KEY")
@@ -71,8 +72,6 @@ class TestDeepSeekAPI(unittest.TestCase):
         """Test basic text generation."""
         prompt = "What color is the sky and why?"
         try:
-            # 添加明确的断点
-            breakpoint()  # 或者使用 pdb.set_trace()
             response = self._make_api_call(self.llm.generate, prompt)
             self.assertIsInstance(response, str)
             self.assertGreater(len(response), 0)
@@ -146,7 +145,7 @@ class TestDeepSeekAPI(unittest.TestCase):
         # Make multiple requests in quick succession
         prompt = "What color is the sky?"
         responses = []
-        
+
         for i in range(3):
             try:
                 response = self._make_api_call(self.llm.generate, prompt)

@@ -1,22 +1,53 @@
-# DeepSeek API Configuration
-deepseek:
-  api_key: sk-3134d1b264ac40e6b13718e565c38fbb
-  model_name: deepseek-chat
+# Default configuration for Sophos RAG
+
+# Data processing settings
+data:
+  chunk_size: 512
+  chunk_overlap: 50
+  text_splitter: "recursive"  # Options: recursive, sentence, token
+  encoding: "utf-8"
+
+# Embedding settings
+embeddings:
+  encoder_type: tfidf
+  max_features: 1000
+  ngram_range: [1, 2]  # 这个会被转换为元组
+
+# Vector store settings
+vector_store:
+  type: faiss
+  dimension: 1000  # TF-IDF 特征维度
+  index_type: Flat
+  distance_metric: cosine
+  nprobe: 10
+
+# Retriever settings
+retriever:
+  type: similarity
+  top_k: 3
+  score_threshold: 0.1
+
+# Generator settings
+generator:
+  type: deepseek  # Options: deepseek, huggingface, openai
+  model_name: "deepseek-chat"
   temperature: 0.7
   max_tokens: 1024
   top_p: 0.95
-  base_url: https://api.deepseek.com/v1
-  verify_ssl: false
+  base_url: "https://api.deepseek.com"
+  verify_ssl: true
   max_retries: 3
   timeout: 30
 
-# Proxy Configuration (optional)
-proxy:
-  enabled: false
-  http: ${HTTP_PROXY}  # Will be replaced by environment variable
-  https: ${HTTPS_PROXY}  # Will be replaced by environment variable
-
-# Logging Configuration
+# Logging settings
 logging:
-  level: INFO
-  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s" 
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/sophos_rag.log"
+
+# API settings
+api:
+  host: "0.0.0.0"
+  port: 8000
+  debug: false
+  cors_origins: ["*"] 
