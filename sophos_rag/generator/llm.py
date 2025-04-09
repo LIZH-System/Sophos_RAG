@@ -149,7 +149,7 @@ class OpenAILLM(LLM):
         self.max_tokens = config.get("max_tokens", 1000)
         self.top_p = config.get("top_p", 0.9)
         self.base_url = config.get("base_url", "https://api.openai.com/v1")
-        self.verify_ssl = config.get("verify_ssl", True)
+        self.verify_ssl = config.get("verify_ssl", False)
         self.max_retries = config.get("max_retries", 3)
         self.timeout = config.get("timeout", 30)
         
@@ -405,7 +405,14 @@ class DeepSeekLLM(LLM):
             
         Returns:
             Generated text
+            
+        Raises:
+            ValueError: If prompt is empty or not a string
         """
+        # Validate input
+        if not prompt or not isinstance(prompt, str):
+            raise ValueError("Prompt must be a non-empty string")
+            
         data = {
             "model": self.model_name,
             "messages": [
@@ -428,7 +435,17 @@ class DeepSeekLLM(LLM):
             
         Returns:
             Generated text
+            
+        Raises:
+            ValueError: If query is empty, not a string, or context is empty
         """
+        # Validate inputs
+        if not query or not isinstance(query, str):
+            raise ValueError("Query must be a non-empty string")
+            
+        if not context or not isinstance(context, list):
+            raise ValueError("Context must be a non-empty list")
+            
         context_str = "\n\n".join(doc["content"] for doc in context)
         prompt = f"""Context:
 {context_str}

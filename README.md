@@ -29,50 +29,14 @@ Sophos RAG aims to push the boundaries of traditional RAG systems by:
 - **Efficient Indexing**: Optimize vector storage for low-latency retrieval
 - **Explainable Responses**: Provide transparency in how answers are derived
 
-## Installation
+## How to develop
 
-### Using Conda (Recommended)
+### Develop mode
 
 ```bash
-# Clone the repository
 git clone https://github.com/LIZH-System/Sophos_RAG.git
 cd Sophos_RAG
-
-# Create and activate conda environment
-conda env create -f environment.yml
-conda activate sophos_rag
-
-# Install the package in development mode
-pip install -e .
-```
-
-### Using Pip
-
-```bash
-# Clone the repository
-git clone https://github.com/LIZH-System/Sophos_RAG.git
-cd Sophos_RAG
-
-# Create a virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -e .
-```
-
-### GPU Support
-
-For GPU acceleration, install the CUDA-enabled version of PyTorch and FAISS:
-
-```bash
-# With conda
-conda install -c pytorch pytorch cudatoolkit
-conda install -c conda-forge faiss-gpu
-
-# Or with pip
-pip install torch --extra-index-url https://download.pytorch.org/whl/cu117
-pip install faiss-gpu
+pip install -e ".[dev]"
 ```
 
 ## Quick Start
