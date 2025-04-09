@@ -1,0 +1,39 @@
+### Test DeepSeek API
+POST https://api.deepseek.com/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{$dotenv DEEPSEEK_API_KEY}}
+
+{
+    "model": "deepseek-chat",
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are a helpful assistant."
+        },
+        {
+            "role": "user",
+            "content": "What color is the sky?"
+        }
+    ],
+    "stream": false
+}
+
+### Test with different prompt
+POST https://api.deepseek.com/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{$dotenv DEEPSEEK_API_KEY}}
+
+{
+    "model": "deepseek-chat",
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are a helpful assistant."
+        },
+        {
+            "role": "user",
+            "content": "Tell me a short joke."
+        }
+    ],
+    "stream": false
+} 
