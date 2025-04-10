@@ -3,7 +3,7 @@
 A next-generation Retrieval-Augmented Generation (RAG) system that integrates knowledge graphs, pre-trained models, and advanced retrieval techniques to deliver low-hallucination, low-latency, and strong reasoning capabilities.
 
 <p align="center">
-  <img src="docs/images/sophos_rag_logo.png" alt="Sophos RAG Logo" width="200"/>
+  <img src="assets/logo.png" alt="Sophos RAG Logo" width="200"/>
 </p>
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
