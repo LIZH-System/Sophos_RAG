@@ -1,6 +1,7 @@
 # Environment variables
 .env
-.env.*
+.cursor/
+
 
 # API keys and secrets
 *_key
